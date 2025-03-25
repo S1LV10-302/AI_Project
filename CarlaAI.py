@@ -21,14 +21,14 @@ def get_weather():
     response = requests.get(url)
     data = response.json()
 
-    # Extract specific weather details
+    
     location = data['location']['name']
     temperature = data['current']['temp_c']
     condition = data['current']['condition']['text']
     humidity = data['current']['humidity']
     wind_speed = data['current']['wind_kph']
 
-    # Format the weather information into a string
+   
     weather_info = (
         f"The current weather in {location} is {condition}. "
         f"The temperature is {temperature} degrees Celsius. "
@@ -38,7 +38,7 @@ def get_weather():
 
     return weather_info
 
-def search_internet(query, sentences=2):
+def search_internet(query, sentences=3):
     try:
         summary = wikipedia.summary(query, sentences=sentences)
         return summary
@@ -82,6 +82,7 @@ def main():
     
     r = sr.Recognizer()
     with sr.Microphone() as source:
+        r.adjust_for_ambient_noise(source)
         while True:
             command = listen_for_command(r, source)
             if not command:
