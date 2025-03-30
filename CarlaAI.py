@@ -21,14 +21,12 @@ def get_weather():
     response = requests.get(url)
     data = response.json()
 
-    
     location = data['location']['name']
     temperature = data['current']['temp_c']
     condition = data['current']['condition']['text']
     humidity = data['current']['humidity']
     wind_speed = data['current']['wind_kph']
 
-   
     weather_info = (
         f"The current weather in {location} is {condition}. "
         f"The temperature is {temperature} degrees Celsius. "
@@ -49,8 +47,6 @@ def search_internet(query, sentences=3):
 
 def initialize_tts():
     engine = pyttsx3.init()
-
-    
     voices = engine.getProperty('voices')
     engine.setProperty('voice', voices[VOICE_INDEX].id)   
     engine.setProperty('rate', SPEECH_RATE)
@@ -76,10 +72,22 @@ def listen_for_command(r, source):
         print("Could not request results from Google Speech Recognition service.")
         return None
 
+def evaluate_expression(expression):
+    # 10 X 10 | 10 *10 => 10 times 10
+    # 2^2  =>2 to the power of 2
+    
+    expression = expression.replace("X", "*")
+
+    try:
+        
+        print(f"Evaluating expression: {expression}")
+        result = eval(expression)
+        return f"The result is {result}."
+    except Exception as e:
+        return "Sorry, I couldn't evaluate that expression."
+
 def main():
     engine = initialize_tts()
-
-    
     r = sr.Recognizer()
     with sr.Microphone() as source:
         r.adjust_for_ambient_noise(source)
@@ -90,15 +98,21 @@ def main():
 
             if command.startswith('hey carla'):
                 speak("How can I help you?", engine)
-                print('How can i help you?')
+                print('How can I help you?')
                 continue  
 
-            if command == 'weather' or command =='good morning':  # Weather option
+            if command == 'weather' or command == 'good morning':  # Weather option
                 weather_info = get_weather()
                 print(weather_info)
                 speak(weather_info, engine)
 
-            elif command == 'search':  # Search option
+            if "calculate" in command:  # Calculation option
+                expression = command.replace("calculate", "").strip()
+                result = evaluate_expression(expression)
+                print(result)
+                speak(result, engine)
+
+            if command == 'search':  # Search option
                 speak("What do you want to search for?", engine)
                 print("What do you want to search for?")
                 query = listen_for_command(r, source)
@@ -114,7 +128,7 @@ def main():
 
                 # Option to add more information 
                 while True:
-                    print("Say 'add' to add more sentences or 'ok' to stop.")
+                    print("Say 'add' to add more sentences or 'stop' to stop.")
                     additional_command = listen_for_command(r, source)
                     if additional_command == 'add':
                         sentences += 4  
@@ -123,14 +137,12 @@ def main():
                         print(results) 
                         speak(results, engine)
                         print("\n")
-                    elif additional_command == 'okay' or additional_command == 'ok' or additional_command == 'stop' :
-                        break
                     elif additional_command == 'stop':
                         break
                     else:
                         print("Invalid command. Please say 'more' or 'stop'.")
 
-            elif command == 'stop' or command =='exit':  # Exit option
+            elif command == 'goodbye' or command == 'exit' or command == 'stop':  # Exit option
                 break
             else:
                 print("Invalid command. Please try again.")
