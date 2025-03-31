@@ -2,9 +2,9 @@
 ## **----WELCOME TO MY AI PROJECT JOURNEY----**
 
 ### _TABLE OF CONTENTS_
-Description - [Here](https://github.com/S1LV10-302/AI_Project/edit/main/README.md#description)
+Description - [Here](#description)
 
-How does it function? - [Here](https://github.com/S1LV10-302/AI_Project?tab=readme-ov-file#how-does-it-function)
+How does it function? - [Here](#how-does-it-function)
 
 Updates - [Here](#updates)
 
