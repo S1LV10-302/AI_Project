@@ -4,9 +4,9 @@
 ### _TABLE OF CONTENTS_
 Description - [Here](https://github.com/S1LV10-302/AI_Project/edit/main/README.md#description)
 
-How does it function? - [Here](https://github.com/S1LV10-302/AI_Project/edit/main/README.md#how-does-it-function)
+How does it function? - [Here](https://github.com/S1LV10-302/AI_Project?tab=readme-ov-file#how-does-it-function)
 
-Updates - [Here](https://github.com/S1LV10-302/AI_Project/edit/main/README.md#updates)
+Updates - [Here](#updates)
 
 ## Description
 The scope of this project is to build an AI home assistant.
